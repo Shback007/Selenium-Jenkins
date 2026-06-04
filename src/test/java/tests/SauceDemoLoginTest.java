@@ -16,11 +16,6 @@ public class SauceDemoLoginTest {
 
         ChromeOptions options = new ChromeOptions();
 
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--window-size=1920,1080");
-
         WebDriver driver = new ChromeDriver(options);
 
         driver.manage().window().maximize();
