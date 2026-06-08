@@ -3,40 +3,22 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK17'
-        maven 'Maven3'
+        jdk 'jdk21'
+        maven 'maven3.9.5'
     }
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main',
                 url: 'https://github.com/Shback007/Selenium-Jenkins.git'
             }
         }
 
-        stage('Clean Project') {
+        stage('Build and Test') {
             steps {
-                bat 'mvn clean'
-            }
-        }
-
-        stage('Build Project') {
-            steps {
-                bat 'mvn compile'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'mvn test'
-            }
-        }
-
-        stage('Publish Test Results') {
-            steps {
-                junit '**/surefire-reports/*.xml'
+                bat 'mvn clean test'
             }
         }
     }
@@ -44,15 +26,15 @@ pipeline {
     post {
 
         always {
-            archiveArtifacts artifacts: 'target/**/*.*', fingerprint: true
+            junit '**/surefire-reports/*.xml'
         }
 
         success {
-            echo 'Pipeline executed successfully!'
+            echo 'Tests Passed Successfully!'
         }
 
         failure {
-            echo 'Pipeline failed!'
+            echo 'Tests Failed!'
         }
     }
 }

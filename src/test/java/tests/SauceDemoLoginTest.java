@@ -9,14 +9,22 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class SauceDemoLoginTest {
 
     @Test
     public void loginTest() {
 
-        ChromeOptions options = new ChromeOptions();
+    	ChromeOptions options = new ChromeOptions();
 
-        WebDriver driver = new ChromeDriver(options);
+    	options.addArguments("--headless=new");
+    	options.addArguments("--disable-gpu");
+    	options.addArguments("--window-size=1920,1080");
+
+    	WebDriverManager.chromedriver().setup();
+
+    	WebDriver driver = new ChromeDriver(options);
 
         driver.manage().window().maximize();
 
